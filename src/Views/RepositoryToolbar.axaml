@@ -9,31 +9,31 @@
              x:DataType="vm:Repository">
   <Grid Height="48" ColumnDefinitions="*,Auto,0,*">
     <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="4,0,0,0">
-      <Button Classes="icon_button" Width="48" Click="OpenWithExternalTools" ToolTip.Tip="{DynamicResource Text.Repository.OpenWithExternalTools}">
+      <Button Classes="icon_button" Width="52" Click="OpenWithExternalTools" ToolTip.Tip="{DynamicResource Text.Repository.OpenWithExternalTools}">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
           <Path Width="16" Height="16" Data="{StaticResource Icons.OpenWith}" HorizontalAlignment="Center"/>
-          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.OpenWithExternalTools}" HorizontalAlignment="Center" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.OpenWithExternalTools}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
         </StackPanel>
       </Button>
 
-      <Button Classes="icon_button" Width="48" Click="OpenGitLogs" ToolTip.Tip="{DynamicResource Text.Repository.ViewLogs}">
+      <Button Classes="icon_button" Width="52" Click="OpenGitLogs" ToolTip.Tip="{DynamicResource Text.Repository.ViewLogs}">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
           <Path Width="16" Height="16" Data="{StaticResource Icons.Logs}" HorizontalAlignment="Center"/>
-          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.ViewLogs}" HorizontalAlignment="Center" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.ViewLogs}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
         </StackPanel>
       </Button>
 
-      <Button Classes="icon_button" Width="48" Click="OpenStatistics" ToolTip.Tip="{DynamicResource Text.Repository.Statistics}">
+      <Button Classes="icon_button" Width="52" Click="OpenStatistics" ToolTip.Tip="{DynamicResource Text.Repository.Statistics}">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
           <Path Width="16" Height="16" Data="{StaticResource Icons.Statistics}" HorizontalAlignment="Center"/>
-          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.Statistics}" HorizontalAlignment="Center" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.Statistics}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
         </StackPanel>
       </Button>
 
-      <Button Classes="icon_button" Width="48" Click="OpenConfigure" ToolTip.Tip="{DynamicResource Text.Repository.Configure}">
+      <Button Classes="icon_button" Width="60" Click="OpenConfigure" ToolTip.Tip="{DynamicResource Text.Repository.Configure}">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
           <Path Width="16" Height="16" Data="{StaticResource Icons.Settings}" HorizontalAlignment="Center"/>
-          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.Configure}" HorizontalAlignment="Center" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+          <TextBlock FontSize="10" Text="{DynamicResource Text.Repository.Configure}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
         </StackPanel>
       </Button>
     </StackPanel>
@@ -128,7 +128,7 @@
         </StackPanel>
       </Button>
 
-      <Button Classes="icon_button" Width="48" Margin="8,0,0,0" Click="StartBisect" IsVisible="{Binding !IsBare}" ToolTip.Tip="{DynamicResource Text.Bisect}">
+      <Button Classes="icon_button" Width="60" Margin="8,0,0,0" Click="StartBisect" IsVisible="{Binding !IsBare}" ToolTip.Tip="{DynamicResource Text.Bisect}">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
           <Path Width="16" Height="16" Data="{StaticResource Icons.Bisect}" HorizontalAlignment="Center"/>
           <TextBlock FontSize="10" Text="{DynamicResource Text.Bisect}" HorizontalAlignment="Center" Margin="0,2,0,0"/>

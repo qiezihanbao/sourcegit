@@ -9,90 +9,162 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SourceGit.Views.CommitDetail"
              x:DataType="vm:CommitDetail">
-  <TabControl SelectedIndex="{Binding ActiveTabIndex, Mode=TwoWay}" Padding="0,4">
+  <UserControl.Styles>
+    <Style Selector="TabItem">
+      <Setter Property="Padding" Value="0"/>
+      <Setter Property="Margin" Value="0"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style Selector="TabItem:pointerover">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style Selector="TextBlock.tab_header">
+      <Setter Property="FontSize" Value="13"/>
+      <Setter Property="FontWeight" Value="Normal"/>
+      <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}"/>
+      <Setter Property="Padding" Value="12,8"/>
+      <Setter Property="Margin" Value="0"/>
+    </Style>
+
+    <Style Selector="TabItem:selected TextBlock.tab_header">
+      <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}"/>
+      <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+
+    <Style Selector="TabItem:pointerover TextBlock.tab_header">
+      <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}"/>
+    </Style>
+  </UserControl.Styles>
+
+  <TabControl SelectedIndex="{Binding ActiveTabIndex, Mode=TwoWay}" Padding="0">
+
     <!-- Information Page -->
     <TabItem>
       <TabItem.Header>
-        <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Info}"/>
+        <Grid>
+          <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Info}"/>
+          <Rectangle Height="2" VerticalAlignment="Bottom" Fill="{DynamicResource Brush.Accent}" IsVisible="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+        </Grid>
       </TabItem.Header>
 
-      <ScrollViewer Margin="4,0,0,0" Offset="{Binding ScrollOffset, Mode=TwoWay}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel Orientation="Vertical">
-          <!-- Base Information -->
-          <v:CommitBaseInfo Content="{Binding Commit}"
-                            FullMessage="{Binding FullMessage}"
-                            SignInfo="{Binding SignInfo}"
-                            SupportsContainsIn="True"
-                            WebLinks="{Binding WebLinks}"
-                            Children="{Binding Children}"
-                            Margin="0,0,12,0"/>
+      <Border Background="{DynamicResource Brush.Contents}"
+              CornerRadius="8"
+              Padding="16">
+        <ScrollViewer Offset="{Binding ScrollOffset, Mode=TwoWay}"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto">
+          <StackPanel Orientation="Vertical">
+            <!-- Base Information -->
+            <v:CommitBaseInfo Content="{Binding Commit}"
+                              FullMessage="{Binding FullMessage}"
+                              SignInfo="{Binding SignInfo}"
+                              SupportsContainsIn="True"
+                              WebLinks="{Binding WebLinks}"
+                              Children="{Binding Children}"/>
 
-          <!-- Line -->
-          <Rectangle Height=".65" Margin="8,8,12,8" Fill="{DynamicResource Brush.Border2}"/>
+            <!-- Line -->
+            <Rectangle Height="1" Margin="0,16,0,16" Fill="{DynamicResource Brush.Border1}"/>
 
-          <!-- Change List -->
-          <ListBox Background="Transparent"
-                   Margin="64,0,12,4"
-                   SelectionMode="Single"
-                   ItemsSource="{Binding Changes, Converter={x:Static c:ListConverters.Top100Changes}}"
-                   KeyDown="OnCommitListKeyDown">
-            <ListBox.Styles>
-              <Style Selector="ListBoxItem">
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="MinHeight" Value="24"/>
-                <Setter Property="CornerRadius" Value="2"/>
-              </Style>
-            </ListBox.Styles>
+            <!-- Change List -->
+            <ListBox Background="Transparent"
+                     SelectionMode="Single"
+                     ItemsSource="{Binding Changes, Converter={x:Static c:ListConverters.Top100Changes}}"
+                     KeyDown="OnCommitListKeyDown">
+              <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                  <Setter Property="Padding" Value="0"/>
+                  <Setter Property="MinHeight" Value="28"/>
+                  <Setter Property="CornerRadius" Value="4"/>
+                  <Setter Property="Margin" Value="0,0,0,4"/>
+                </Style>
+                <Style Selector="ListBoxItem:pointerover">
+                  <Setter Property="Background" Value="{DynamicResource Brush.FlatButton.BackgroundHovered}"/>
+                </Style>
+                <Style Selector="ListBoxItem:selected">
+                  <Setter Property="Background" Value="{DynamicResource Brush.Accent}"/>
+                  <Style Selector="^ TextBlock">
+                    <Setter Property="Foreground" Value="White"/>
+                  </Style>
+                </Style>
+              </ListBox.Styles>
 
-            <ListBox.ItemsPanel>
-              <ItemsPanelTemplate>
-                <StackPanel Orientation="Vertical"/>
-              </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+              <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+              </ListBox.ItemsPanel>
 
-            <ListBox.ItemTemplate>
-              <DataTemplate DataType="m:Change">
-                <Grid Background="Transparent" Height="24" ColumnDefinitions="36,*" ContextRequested="OnChangeContextRequested" DoubleTapped="OnChangeDoubleTapped">
-                  <ToolTip.Tip>
-                    <TextBlock TextWrapping="Wrap">
-                      <Run Text="{Binding Path, Mode=OneWay}"/>
-                      <Run Text=" 鈥?" Foreground="Gray"/>
-                      <Run Text="{Binding IndexDesc, Mode=OneWay}" Foreground="Gray"/>
-                    </TextBlock>
-                  </ToolTip.Tip>
+              <ListBox.ItemTemplate>
+                <DataTemplate DataType="m:Change">
+                  <Grid Background="Transparent"
+                        Height="28"
+                        ColumnDefinitions="36,*"
+                        ContextRequested="OnChangeContextRequested"
+                        DoubleTapped="OnChangeDoubleTapped">
+                    <ToolTip.Tip>
+                      <TextBlock TextWrapping="Wrap">
+                        <Run Text="{Binding Path, Mode=OneWay}"/>
+                        <Run Text=" → " Foreground="Gray"/>
+                        <Run Text="{Binding IndexDesc, Mode=OneWay}" Foreground="Gray"/>
+                      </TextBlock>
+                    </ToolTip.Tip>
 
-                  <v:ChangeStatusIcon Grid.Column="0"
-                                      Width="14" Height="14"
-                                      HorizontalAlignment="Left"
-                                      Margin="16,0,0,0"
-                                      Change="{Binding}"/>
-                  <TextBlock Grid.Column="1" Text="{Binding Path}" Margin="8,0" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis"/>
-                </Grid>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
+                    <v:ChangeStatusIcon Grid.Column="0"
+                                        Width="14" Height="14"
+                                        HorizontalAlignment="Left"
+                                        Margin="16,0,0,0"
+                                        Change="{Binding}"/>
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding Path}"
+                               Margin="8,0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               TextTrimming="CharacterEllipsis"/>
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
 
-          <!-- Only Top100 Tip -->
-          <TextBlock Margin="108,0,12,16"
-                     Text="{DynamicResource Text.CommitDetail.Info.GotoChangesPage}"
-                     Foreground="{DynamicResource Brush.FG2}"
-                     IsVisible="{Binding Changes, Converter={x:Static c:ListConverters.IsOnlyTop100Shows}}"/>
-        </StackPanel>
-      </ScrollViewer>
+            <!-- Only Top100 Tip -->
+            <TextBlock Margin="108,8,0,0"
+                       Text="{DynamicResource Text.CommitDetail.Info.GotoChangesPage}"
+                       Foreground="{DynamicResource Brush.FG2}"
+                       IsVisible="{Binding Changes, Converter={x:Static c:ListConverters.IsOnlyTop100Shows}}"/>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
     </TabItem>
 
+    <!-- Changes Page -->
     <TabItem>
       <TabItem.Header>
-        <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Changes}"/>
+        <Grid>
+          <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Changes}"/>
+          <Rectangle Height="2" VerticalAlignment="Bottom" Fill="{DynamicResource Brush.Accent}" IsVisible="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+        </Grid>
       </TabItem.Header>
-      <v:CommitChanges Margin="4,0"/>
+      <Border Background="{DynamicResource Brush.Contents}"
+              CornerRadius="8"
+              Padding="16">
+        <v:CommitChanges Margin="0"/>
+      </Border>
     </TabItem>
 
+    <!-- Files Page -->
     <TabItem>
       <TabItem.Header>
-        <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Files}"/>
+        <Grid>
+          <TextBlock Classes="tab_header" Text="{DynamicResource Text.CommitDetail.Files}"/>
+          <Rectangle Height="2" VerticalAlignment="Bottom" Fill="{DynamicResource Brush.Accent}" IsVisible="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}"/>
+        </Grid>
       </TabItem.Header>
-      <v:RevisionFiles Margin="4,0"/>
+      <Border Background="{DynamicResource Brush.Contents}"
+              CornerRadius="8"
+              Padding="16">
+        <v:RevisionFiles Margin="0"/>
+      </Border>
     </TabItem>
   </TabControl>
 </UserControl>

@@ -12,7 +12,7 @@ namespace SourceGit.Models
     {
         public static List<Pen> Pens { get; } = [];
 
-        public static void SetDefaultPens(double thickness = 3)
+        public static void SetDefaultPens(double thickness = 2)
         {
             SetPens(s_defaultPenColors, thickness);
         }
@@ -65,8 +65,8 @@ namespace SourceGit.Models
 
         public static CommitGraph Parse(List<Commit> commits, bool firstParentOnlyEnabled)
         {
-            const double unitWidth = 12;
-            const double halfWidth = 6;
+            const double unitWidth = 18;
+            const double halfWidth = 9;
             const double unitHeight = 1;
             const double halfHeight = 0.5;
 

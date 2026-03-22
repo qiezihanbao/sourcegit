@@ -522,7 +522,7 @@
     <Setter Property="FontSize" Value="{Binding Source={x:Static vm:Preferences.Instance}, Path=DefaultFontSize, Converter={x:Static c:DoubleConverters.Increase}}"/>
     <Setter Property="FontWeight" Value="Bold"/>
     <Setter Property="Foreground" Value="{DynamicResource Brush.FG1}"/>
-    <Setter Property="Opacity" Value=".56"/>
+    <Setter Property="Opacity" Value=".7"/>
   </Style>
   <Style Selector="TextBlock.dropped">
     <Setter Property="TextDecorations" Value="Strikethrough"/>
@@ -798,15 +798,15 @@
     </Style>
     <Style Selector="^ ListBoxItem:selected /template/ Border#PART_Background">
       <Setter Property="Background" Value="{DynamicResource Brush.AccentHovered}" />
-      <Setter Property="Opacity" Value="1"/>
+      <Setter Property="Opacity" Value="0.5"/>
     </Style>
     <Style Selector="^:focus-within ListBoxItem:selected /template/ Border#PART_Background">
       <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
-      <Setter Property="Opacity" Value=".65"/>
+      <Setter Property="Opacity" Value="0.4"/>
     </Style>
     <Style Selector="^:focus-within ListBoxItem:selected:pointerover /template/ Border#PART_Background">
       <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
-      <Setter Property="Opacity" Value=".8"/>
+      <Setter Property="Opacity" Value="0.6"/>
     </Style>
   </Style>
 
@@ -1276,8 +1276,8 @@
         <Border Background="{TemplateBinding Background}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-          <Border Background="{DynamicResource Brush.Badge}" CornerRadius="8" Padding="4,0" MinWidth="16" Height="16">
-            <TextBlock Text="{TemplateBinding Content}" FontSize="10" Foreground="{DynamicResource Brush.BadgeFG}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Border Background="{DynamicResource Brush.Accent}" CornerRadius="8" Padding="4,0" MinWidth="16" Height="16">
+            <TextBlock Text="{TemplateBinding Content}" FontSize="10" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
         </Border>
       </ControlTemplate>
@@ -1424,6 +1424,7 @@
   </Style>
 
   <Style Selector="TabItem:selected TextBlock.tab_header">
+    <Setter Property="FontSize" Value="{Binding Source={x:Static vm:Preferences.Instance}, Path=DefaultFontSize, Converter={x:Static c:DoubleConverters.Increase}, ConverterParameter=2}"/>
     <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}"/>
     <Setter Property="Opacity" Value="1"/>
   </Style>
