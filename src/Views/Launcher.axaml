@@ -23,9 +23,15 @@
       <!-- Bottom border -->
       <Border Grid.Column="0" Grid.ColumnSpan="5"
               x:Name="TitleBarBG"
+              Background="{DynamicResource Brush.TitleBar}"
               BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Brush.Border0}"
               DoubleTapped="MaximizeOrRestoreWindow"
               PointerPressed="BeginMoveWindow"/>
+
+      <!-- 动画渐变背景层 - 在页签之下 -->
+      <v:AnimatedTitleBarBackground Grid.Column="0" Grid.ColumnSpan="5"
+                                     ZIndex="0"
+                                     IsVisible="{Binding #ThisControl.ShowTitleBarAnimation, Mode=OneWay}"/>
 
       <!-- Caption Buttons (macOS) -->
       <Border Grid.Column="0" Width="{Binding #ThisControl.LeftCaptionButtonWidth}" IsVisible="{Binding #ThisControl.HasLeftCaptionButton}"/>
@@ -106,7 +112,7 @@
       </Button>
 
       <!-- Pages Tabs -->
-      <v:LauncherTabBar Grid.Column="3" Height="30" Margin="0,0,16,0" VerticalAlignment="Bottom"/>
+      <v:LauncherTabBar Grid.Column="3" Height="30" Margin="0,0,16,0" VerticalAlignment="Bottom" ZIndex="2"/>
 
       <!-- Caption Buttons (Windows/Linux) -->
       <Border Grid.Column="4" Margin="16,0,0,0" IsVisible="{Binding #ThisControl.HasRightCaptionButton}">

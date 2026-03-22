@@ -42,6 +42,16 @@ namespace SourceGit.Views
             }
         }
 
+        // 控制是否显示标题栏动画
+        public static readonly StyledProperty<bool> ShowTitleBarAnimationProperty =
+            AvaloniaProperty.Register<Launcher, bool>(nameof(ShowTitleBarAnimation), true);
+
+        public bool ShowTitleBarAnimation
+        {
+            get => GetValue(ShowTitleBarAnimationProperty);
+            set => SetValue(ShowTitleBarAnimationProperty, value);
+        }
+
         public Launcher()
         {
             if (OperatingSystem.IsMacOS())
@@ -62,6 +72,19 @@ namespace SourceGit.Views
             InitializeComponent();
             PositionChanged += OnPositionChanged;
 
+            // 从设置中读取是否启用渐变效果
+            var pref = ViewModels.Preferences.Instance;
+            ShowTitleBarAnimation = pref.EnableRowGradientEffects;
+
+            // 监听设置变化
+            pref.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(pref.EnableRowGradientEffects))
+                {
+                    ShowTitleBarAnimation = pref.EnableRowGradientEffects;
+                }
+            };
+
             if (OperatingSystem.IsWindows() && OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
             {
                 Background = Brushes.Transparent;
@@ -70,7 +93,7 @@ namespace SourceGit.Views
             }
             else
             {
-                TitleBarBG.Bind(BackgroundProperty, new DynamicResourceExtension("Brush.TitleBar"));
+                TitleBarBG.Background = Brushes.Transparent; // 透明背景以显示动画层
             }
 
             var layout = ViewModels.Preferences.Instance.Layout;

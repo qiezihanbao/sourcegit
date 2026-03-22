@@ -38,7 +38,11 @@
 
   <ItemGroup>
     <AvaloniaResource Include="App.ico" />
-    <AvaloniaResource Include="Resources/Fonts/*" />
+    <!-- 只保留实际使用的字体 -->
+    <AvaloniaResource Include="Resources/Fonts/MiSans-Regular.ttf" />
+    <AvaloniaResource Include="Resources/Fonts/MiSans-Bold.ttf" />
+    <AvaloniaResource Include="Resources/Fonts/JetBrainsMono-Regular.ttf" />
+    <AvaloniaResource Include="Resources/Fonts/JetBrainsMono-Italic.ttf" />
     <AvaloniaResource Include="Resources/Grammars/*" />
     <AvaloniaResource Include="Resources/Images/*" />
     <AvaloniaResource Include="Resources/Images/ExternalToolIcons/*" />

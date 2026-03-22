@@ -10,6 +10,10 @@
              x:Class="SourceGit.Views.Histories"
              x:DataType="vm:Histories"
              x:Name="ThisControl">
+  <UserControl.Resources>
+    <c:CommitColorToTransparentBrushConverter x:Key="CommitColorToTransparentBrushConverter"/>
+    <c:CommitColorToSolidBrushConverter x:Key="CommitColorToSolidBrushConverter"/>
+  </UserControl.Resources>
   <v:HistoriesLayout UseHorizontal="{Binding Source={x:Static vm:Preferences.Instance}, Path=UseTwoColumnsLayoutInHistories}">
     <v:HistoriesLayout.RowDefinitions>
       <RowDefinition Height="{Binding TopArea, Mode=TwoWay}" MinHeight="100"/>
@@ -24,6 +28,20 @@
     </v:HistoriesLayout.ColumnDefinitions>
 
     <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+      <!-- 背景层 - 最底层 -->
+      <Panel Background="{DynamicResource Brush.DataGridHeaderBG}"/>
+
+      <!-- 路线图层 - 在背景层之上，DataGrid之下 -->
+      <v:CommitGraph x:Name="CommitGraph"
+                     Width="220"
+                     Margin="8,36,0,0"
+                     HorizontalAlignment="Left"
+                     ZIndex="0"
+                     IsHitTestVisible="False"
+                     Graph="{Binding Graph}"
+                     DotBrush="{DynamicResource Brush.FG2}"
+                     OnlyHighlightCurrentBranch="{Binding $parent[v:Histories].OnlyHighlightCurrentBranch}"/>
+
       <!-- DataGrid hardcodes all the arrow keys, so we need a fake button to intercept this shortcut key -->
       <Button Width="0" Height="0"
               Click="OnGotoParent"
@@ -36,8 +54,9 @@
       
       <DataGrid x:Name="CommitListContainer"
                 Classes="static_scrollbar"
+                ZIndex="1"
                 ScrollViewer.AllowAutoHide="False"
-                Background="{DynamicResource Brush.DataGridHeaderBG}"
+                Background="Transparent"
                 SelectionMode="Extended"
                 ItemsSource="{Binding Commits, Mode=OneWay}"
                 SelectedItem="{Binding SelectedCommit, Mode=OneWay}"
@@ -64,7 +83,7 @@
             <Style Selector="^ /template/ DataGridRowsPresenter#PART_RowsPresenter">
               <Setter Property="Grid.RowSpan" Value="1" />
               <Setter Property="Grid.ColumnSpan" Value="2" />
-              <Setter Property="Background" Value="{DynamicResource Brush.Contents}"/>
+              <Setter Property="Background" Value="Transparent"/>
             </Style>
             <Style Selector="^ /template/ DataGridColumnHeadersPresenter#PART_ColumnHeadersPresenter">
               <Setter Property="Grid.Column" Value="0" />
@@ -107,42 +126,80 @@
 
           <Style Selector="DataGridCell">
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontStretch" Value="UltraExpanded"/>
             <Setter Property="Padding" Value="8,6"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border0}"/>
             <Setter Property="Template">
               <ControlTemplate>
                 <Grid x:Name="PART_CellRoot">
-                  <Border BorderThickness="{TemplateBinding BorderThickness}"
-                          BorderBrush="{TemplateBinding BorderBrush}"
-                          Padding="0,0,0,1">
-                    <ContentPresenter Margin="0"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      Foreground="{TemplateBinding Foreground}" />
-                  </Border>
+                  <ContentPresenter Margin="0"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Foreground="{TemplateBinding Foreground}" />
                 </Grid>
               </ControlTemplate>
             </Setter>
           </Style>
 
+          <!-- DataGridRow背景绑定到commit的颜色，实现整行渐变 -->
           <Style Selector="DataGridRow">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border0}"/>
+            <Setter Property="Background">
+              <Setter.Value>
+                <MultiBinding Converter="{StaticResource CommitColorToTransparentBrushConverter}">
+                  <Binding/>
+                  <Binding Path="$parent[v:Histories].CurrentBranch"/>
+                </MultiBinding>
+              </Setter.Value>
+            </Setter>
+          </Style>
+
+          <!-- 第一列添加左侧高亮条，保持背景透明不影响GRAPH -->
+          <Style Selector="DataGridCellsPresenter > DataGridCell:nth-child(1)">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate>
+                  <Panel Background="{TemplateBinding Background}">
+                    <Border Width="3"
+                            Background="{Binding $parent[DataGridCell].DataContext, Converter={StaticResource CommitColorToSolidBrushConverter}}"
+                            Margin="0,2,0,2"
+                            HorizontalAlignment="Left"
+                            IsHitTestVisible="False"/>
+                    <ContentPresenter HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Content="{TemplateBinding Content}"/>
+                  </Panel>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+
+          <!-- 所有单元格背景透明 -->
+          <Style Selector="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
           </Style>
         </DataGrid.Styles>
 
         <DataGrid.Columns>
-          <DataGridTemplateColumn Width="*" IsReadOnly="True">
+          <!-- Graph + Branch合并列 - Graph在左，Branch在Graph后+5px -->
+          <DataGridTemplateColumn MinWidth="150" CanUserResize="True" IsReadOnly="True">
+            <DataGridTemplateColumn.Width>
+              <Binding Source="{x:Static vm:Preferences.Instance}"
+                       Path="Layout.GraphAndBranchColumnWidth"
+                       Mode="TwoWay"/>
+            </DataGridTemplateColumn.Width>
             <DataGridTemplateColumn.Header>
-              <TextBlock Classes="table_header" Text="{DynamicResource Text.Histories.Header.GraphAndSubject}" HorizontalAlignment="Center"/>
+              <TextBlock Classes="table_header" Text="{DynamicResource Text.Histories.Header.GraphAndBranch}" HorizontalAlignment="Center"/>
             </DataGridTemplateColumn.Header>
-
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate DataType="m:Commit">
                 <Border Padding="{Binding LeftMargin, Converter={x:Static c:DoubleConverters.ToLeftMargin}}" ClipToBounds="True" Background="Transparent">
-                  <Grid ColumnDefinitions="Auto,Auto,Auto,*" Margin="8,0,8,0" ClipToBounds="True">
+                  <Grid ColumnDefinitions="Auto,Auto,Auto">
                     <v:CommitStatusIndicator Grid.Column="0"
                                              CurrentBranch="{Binding $parent[v:Histories].CurrentBranch}"
                                              AheadBrush="{DynamicResource Brush.Accent}"
@@ -162,8 +219,7 @@
                                            Foreground="{DynamicResource Brush.FG1}"
                                            ShowTags="{Binding Source={x:Static vm:Preferences.Instance}, Path=ShowTagsInGraph}"
                                            FontSize="12"
-                                           VerticalAlignment="Center"
-                                           Margin="0,0,12,0">
+                                           VerticalAlignment="Center">
                       <v:CommitRefsPresenter.UseGraphColor>
                         <MultiBinding Converter="{x:Static BoolConverters.Or}">
                           <Binding Path="IsMerged"/>
@@ -171,20 +227,32 @@
                         </MultiBinding>
                       </v:CommitRefsPresenter.UseGraphColor>
                     </v:CommitRefsPresenter>
-
-                    <v:CommitSubjectPresenter Grid.Column="3"
-                                              Height="36"
-                                              FontFamily="{DynamicResource Fonts.Default}"
-                                              CodeFontFamily="{DynamicResource Fonts.Monospace}"
-                                              InlineCodeBackground="{DynamicResource Brush.InlineCode}"
-                                              Foreground="{DynamicResource Brush.FG1}"
-                                              LinkForeground="{DynamicResource Brush.Link}"
-                                              Subject="{Binding Subject}"
-                                              IssueTrackers="{Binding $parent[v:Histories].IssueTrackers}"
-                                              FontWeight="{Binding IsCurrentHead, Converter={x:Static c:BoolConverters.IsBoldToFontWeight}}"
-                                              Opacity="{Binding IsMerged, Converter={x:Static c:BoolConverters.IsMergedToOpacity}}"/>
                   </Grid>
                 </Border>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
+          <!-- Commit Message列 -->
+          <DataGridTemplateColumn Width="*" IsReadOnly="True">
+            <DataGridTemplateColumn.Header>
+              <TextBlock Classes="table_header" Text="{DynamicResource Text.Histories.Header.CommitMessage}" HorizontalAlignment="Center"/>
+            </DataGridTemplateColumn.Header>
+
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate DataType="m:Commit">
+                <Grid ClipToBounds="True" Background="Transparent">
+                  <v:CommitSubjectPresenter Height="36"
+                                            FontFamily="{DynamicResource Fonts.Default}"
+                                            CodeFontFamily="{DynamicResource Fonts.Monospace}"
+                                            InlineCodeBackground="{DynamicResource Brush.InlineCode}"
+                                            Foreground="{DynamicResource Brush.FG1}"
+                                            LinkForeground="{DynamicResource Brush.Link}"
+                                            Subject="{Binding Subject}"
+                                            IssueTrackers="{Binding $parent[v:Histories].IssueTrackers}"
+                                            FontWeight="{Binding IsCurrentHead, Converter={x:Static c:BoolConverters.IsBoldToFontWeight}}"
+                                            Opacity="{Binding IsMerged, Converter={x:Static c:BoolConverters.IsMergedToOpacity}}"/>
+                </Grid>
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>
           </DataGridTemplateColumn>
@@ -267,15 +335,6 @@
           </DataGridTemplateColumn>
         </DataGrid.Columns>
       </DataGrid>
-
-      <v:CommitGraph x:Name="CommitGraph"
-                     Margin="0,36,0,0"
-                     Graph="{Binding Graph}"
-                     DotBrush="{DynamicResource Brush.Contents}"
-                     OnlyHighlightCurrentBranch="{Binding $parent[v:Histories].OnlyHighlightCurrentBranch}"
-                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                     IsHitTestVisible="False"
-                     ClipToBounds="True"/>
 
       <Border Width="32" Height="32"
               Margin="0,0,16,8"

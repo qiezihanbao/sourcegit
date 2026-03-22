@@ -2,19 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary x:Key="Light">
-      <Color x:Key="Color.Window">#FFF0F5F9</Color>
+      <Color x:Key="Color.Window">#FFF5F5F5</Color>
       <Color x:Key="Color.WindowBorder">#FF999999</Color>
-      <Color x:Key="Color.TitleBar">#FFCFDEEA</Color>
-      <Color x:Key="Color.ToolBar">#FFF0F5F9</Color>
+      <Color x:Key="Color.ToolBar">#FFF5F5F5</Color>
       <Color x:Key="Color.Popup">#FFF8F8F8</Color>
       <Color x:Key="Color.Contents">#FFFAFAFA</Color>
-      <Color x:Key="Color.Badge">#FFB0CEE8</Color>
-      <Color x:Key="Color.BadgeFG">#FF1F1F1F</Color>
       <Color x:Key="Color.Conflict">#FF836C2E</Color>
       <Color x:Key="Color.Conflict.Foreground">#FFFFFFFF</Color>
-      <Color x:Key="Color.Conflict.MineBG">#400078D7</Color>
-      <Color x:Key="Color.Conflict.TheirsBG">#40FF8C00</Color>
-      <Color x:Key="Color.Border0">#FFCFCFCF</Color>
+      <Color x:Key="Color.Border0">#FFE0E0E0</Color>
       <Color x:Key="Color.Border1">#FF898989</Color>
       <Color x:Key="Color.Border2">#FFCFCFCF</Color>
       <Color x:Key="Color.FlatButton.Background">#FFF8F8F8</Color>
@@ -23,54 +18,121 @@
       <Color x:Key="Color.FG1">#FF1F1F1F</Color>
       <Color x:Key="Color.FG2">#FF6F6F6F</Color>
       <Color x:Key="Color.Diff.EmptyBG">#10000000</Color>
-      <Color x:Key="Color.Diff.AddedBG">#80BFE6C1</Color>
-      <Color x:Key="Color.Diff.DeletedBG">#80FF9797</Color>
-      <Color x:Key="Color.Diff.AddedHighlight">#A7E1A7</Color>
-      <Color x:Key="Color.Diff.DeletedHighlight">#F19B9D</Color>
-      <Color x:Key="Color.Diff.BlockBorderHighlight">DarkCyan</Color>
-      <Color x:Key="Color.Link">#0000EE</Color>
+      <!-- 恢复绿色和红色的diff颜色 -->
+      <Color x:Key="Color.Diff.AddedBG">#8090C090</Color>
+      <Color x:Key="Color.Diff.DeletedBG">#80C09090</Color>
+      <Color x:Key="Color.Diff.AddedHighlight">#A0308D3C</Color>
+      <Color x:Key="Color.Diff.DeletedHighlight">#A09F4247</Color>
+      <Color x:Key="Color.Link">#FF606060</Color>
       <Color x:Key="Color.InlineCode">#FFE4E4E4</Color>
       <Color x:Key="Color.InlineCodeFG">Black</Color>
-      <Color x:Key="Color.DataGridHeaderBG">#FFF0F5F9</Color>
+      <Color x:Key="Color.DataGridHeaderBG">#FFF5F5F5</Color>
+      <Color x:Key="Color.Conflict.MineBG">#40707070</Color>
+      <Color x:Key="Color.Conflict.TheirsBG">#40909090</Color>
+      <Color x:Key="Color.Diff.BlockBorderHighlight">#3090C090</Color>
+      <!-- 暗淡蓝色Badge -->
+      <Color x:Key="Color.Badge">#FF6A8AAA</Color>
+      <Color x:Key="Color.BadgeFG">#FFFFFFFF</Color>
+      <!-- 淡蓝色Accent颜色，100%不透明度（提高40%） -->
+      <Color x:Key="Color.Accent">#FF6A8ABA</Color>
+      <Color x:Key="Color.AccentHovered">#FF7A9ACA</Color>
+      <!-- TitleBar光点动画颜色 (Light主题) -->
+      <Color x:Key="Color.TitleBarSpotlight.Yellow">#FFFFDD00</Color>
+      <Color x:Key="Color.TitleBarSpotlight.Blue">#FF00BBFF</Color>
+      <!-- TitleBar水平渐变 - 黄色和蓝色点光 (Light主题) - 增强光点宽度 -->
+      <LinearGradientBrush x:Key="Brush.TitleBar" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FFE8E8E8"/>
+        <GradientStop Offset="0.06" Color="#FFE8E8E8"/>
+        <GradientStop Offset="0.07" Color="#FFEBE8D0"/>
+        <GradientStop Offset="0.10" Color="#FFFFDD00" />
+        <GradientStop Offset="0.13" Color="#FFEBE8D0"/>
+        <GradientStop Offset="0.18" Color="#FFE8E8E8"/>
+        <GradientStop Offset="0.26" Color="#FFD8E8F0"/>
+        <GradientStop Offset="0.29" Color="#FF00BBFF" />
+        <GradientStop Offset="0.32" Color="#FFD8E8F0"/>
+        <GradientStop Offset="0.38" Color="#FFE8E8E8"/>
+        <GradientStop Offset="0.46" Color="#FFEBE8D0"/>
+        <GradientStop Offset="0.49" Color="#FFFFDD00" />
+        <GradientStop Offset="0.52" Color="#FFEBE8D0"/>
+        <GradientStop Offset="0.58" Color="#FFE8E8E8"/>
+        <GradientStop Offset="0.66" Color="#FFD8E8F0"/>
+        <GradientStop Offset="0.69" Color="#FF00BBFF" />
+        <GradientStop Offset="0.72" Color="#FFD8E8F0"/>
+        <GradientStop Offset="0.78" Color="#FFE8E8E8"/>
+        <GradientStop Offset="0.86" Color="#FFEBE8D0"/>
+        <GradientStop Offset="0.89" Color="#FFFFDD00" />
+        <GradientStop Offset="0.92" Color="#FFEBE8D0"/>
+        <GradientStop Offset="1" Color="#FFE8E8E8"/>
+      </LinearGradientBrush>
     </ResourceDictionary>
 
     <ResourceDictionary x:Key="Dark">
       <Color x:Key="Color.Window">#FF1E1E1E</Color>
       <Color x:Key="Color.WindowBorder">#FF606060</Color>
-      <Color x:Key="Color.TitleBar">#FF181818</Color>
       <Color x:Key="Color.ToolBar">#FF1E1E1E</Color>
       <Color x:Key="Color.Popup">#FF2D2D2D</Color>
-      <Color x:Key="Color.Contents">#FF252525</Color>
-      <Color x:Key="Color.Badge">#FF8F8F8F</Color>
-      <Color x:Key="Color.BadgeFG">#FFDDDDDD</Color>
+      <Color x:Key="Color.Contents">#FF1A1A1A</Color>
+      <!-- 暗淡蓝色Badge -->
+      <Color x:Key="Color.Badge">#FF5A7A9A</Color>
+      <Color x:Key="Color.BadgeFG">#FFFFFFFF</Color>
       <Color x:Key="Color.Conflict">#FFFAFAD2</Color>
       <Color x:Key="Color.Conflict.Foreground">#FF252525</Color>
-      <Color x:Key="Color.Conflict.MineBG">#400078D7</Color>
-      <Color x:Key="Color.Conflict.TheirsBG">#40FF8C00</Color>
+      <Color x:Key="Color.Conflict.MineBG">#40909090</Color>
+      <Color x:Key="Color.Conflict.TheirsBG">#40B0B0B0</Color>
       <Color x:Key="Color.Border0">#FF181818</Color>
       <Color x:Key="Color.Border1">#FF7C7C7C</Color>
       <Color x:Key="Color.Border2">#FF333333</Color>
       <Color x:Key="Color.FlatButton.Background">#FF303030</Color>
       <Color x:Key="Color.FlatButton.BackgroundHovered">#FF3A3A3A</Color>
       <Color x:Key="Color.FlatButton.FloatingBorder">#FF4F4F4F</Color>
-      <Color x:Key="Color.FG1">#FFDDDDDD</Color>
-      <Color x:Key="Color.FG2">#40F1F1F1</Color>
+      <Color x:Key="Color.FG1">#FFE8E8E8</Color>
+      <Color x:Key="Color.FG2">#60F1F1F1</Color>
       <Color x:Key="Color.Diff.EmptyBG">#3C000000</Color>
       <Color x:Key="Color.Diff.AddedBG">#C03A5C3F</Color>
       <Color x:Key="Color.Diff.DeletedBG">#C0633F3E</Color>
       <Color x:Key="Color.Diff.AddedHighlight">#A0308D3C</Color>
       <Color x:Key="Color.Diff.DeletedHighlight">#A09F4247</Color>
-      <Color x:Key="Color.Diff.BlockBorderHighlight">DarkCyan</Color>
-      <Color x:Key="Color.Link">#4DAAFC</Color>
+      <Color x:Key="Color.Diff.BlockBorderHighlight">Gray</Color>
+      <Color x:Key="Color.Link">#FF9E9E9E</Color>
       <Color x:Key="Color.InlineCode">#FF383838</Color>
       <Color x:Key="Color.InlineCodeFG">#FFF0F0F0</Color>
       <Color x:Key="Color.DataGridHeaderBG">#FF252525</Color>
+      <!-- 深色模式使用更亮的淡蓝色Accent，100%不透明度（提高40%） -->
+      <Color x:Key="Color.Accent">#FF8AAABB</Color>
+      <Color x:Key="Color.AccentHovered">#FF9ABBCC</Color>
+      <!-- TitleBar光点动画颜色 (Dark主题 - 饱和度和亮度降低30%) -->
+      <Color x:Key="Color.TitleBarSpotlight.Yellow">#FFB39B00</Color>
+      <Color x:Key="Color.TitleBarSpotlight.Blue">#FF0082B3</Color>
+      <!-- TitleBar水平渐变 - 黄色和蓝色点光 (Dark主题) - 增强光点宽度 -->
+      <LinearGradientBrush x:Key="Brush.TitleBar" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FF0D0D0D"/>
+        <GradientStop Offset="0.06" Color="#FF0D0D0D"/>
+        <GradientStop Offset="0.07" Color="#FF1A1915"/>
+        <GradientStop Offset="0.10" Color="#FFDDAA00" />
+        <GradientStop Offset="0.13" Color="#FF1A1915"/>
+        <GradientStop Offset="0.18" Color="#FF0D0D0D"/>
+        <GradientStop Offset="0.26" Color="#FF151F28"/>
+        <GradientStop Offset="0.29" Color="#FF00AAFF" />
+        <GradientStop Offset="0.32" Color="#FF151F28"/>
+        <GradientStop Offset="0.38" Color="#FF0D0D0D"/>
+        <GradientStop Offset="0.46" Color="#FF1A1915"/>
+        <GradientStop Offset="0.49" Color="#FFDDAA00" />
+        <GradientStop Offset="0.52" Color="#FF1A1915"/>
+        <GradientStop Offset="0.58" Color="#FF0D0D0D"/>
+        <GradientStop Offset="0.66" Color="#FF151F28"/>
+        <GradientStop Offset="0.69" Color="#FF00AAFF" />
+        <GradientStop Offset="0.72" Color="#FF151F28"/>
+        <GradientStop Offset="0.78" Color="#FF0D0D0D"/>
+        <GradientStop Offset="0.86" Color="#FF1A1915"/>
+        <GradientStop Offset="0.89" Color="#FFDDAA00" />
+        <GradientStop Offset="0.92" Color="#FF1A1915"/>
+        <GradientStop Offset="1" Color="#FF0D0D0D"/>
+      </LinearGradientBrush>
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 
   <SolidColorBrush x:Key="Brush.Window" Color="{DynamicResource Color.Window}"/>
   <SolidColorBrush x:Key="Brush.WindowBorder" Color="{DynamicResource Color.WindowBorder}"/>
-  <SolidColorBrush x:Key="Brush.TitleBar" Color="{DynamicResource Color.TitleBar}"/>
   <SolidColorBrush x:Key="Brush.ToolBar" Color="{DynamicResource Color.ToolBar}"/>
   <SolidColorBrush x:Key="Brush.Popup" Color="{DynamicResource Color.Popup}"/>
   <SolidColorBrush x:Key="Brush.Contents" Color="{DynamicResource Color.Contents}"/>
@@ -88,8 +150,6 @@
   <SolidColorBrush x:Key="Brush.FlatButton.FloatingBorder" Color="{DynamicResource Color.FlatButton.FloatingBorder}"/>
   <SolidColorBrush x:Key="Brush.FG1" Color="{DynamicResource Color.FG1}"/>
   <SolidColorBrush x:Key="Brush.FG2" Color="{DynamicResource Color.FG2}"/>
-  <SolidColorBrush x:Key="Brush.Accent" Color="{DynamicResource SystemAccentColor}"/>
-  <SolidColorBrush x:Key="Brush.AccentHovered" Color="{DynamicResource SystemListLowColor}"/>
   <SolidColorBrush x:Key="Brush.Diff.EmptyBG" Color="{DynamicResource Color.Diff.EmptyBG}"/>
   <SolidColorBrush x:Key="Brush.Diff.AddedBG" Color="{DynamicResource Color.Diff.AddedBG}"/>
   <SolidColorBrush x:Key="Brush.Diff.DeletedBG" Color="{DynamicResource Color.Diff.DeletedBG}"/>
@@ -100,7 +160,9 @@
   <SolidColorBrush x:Key="Brush.InlineCode" Color="{DynamicResource Color.InlineCode}"/>
   <SolidColorBrush x:Key="Brush.InlineCodeFG" Color="{DynamicResource Color.InlineCodeFG}"/>
   <SolidColorBrush x:Key="Brush.DataGridHeaderBG" Color="{DynamicResource Color.DataGridHeaderBG}"/>
+  <SolidColorBrush x:Key="Brush.Accent" Color="{DynamicResource Color.Accent}"/>
+  <SolidColorBrush x:Key="Brush.AccentHovered" Color="{DynamicResource Color.AccentHovered}"/>
 
-  <FontFamily x:Key="Fonts.Default">fonts:SourceGit#LXGW Bright Code</FontFamily>
-  <FontFamily x:Key="Fonts.Monospace">fonts:SourceGit#LXGW Bright Code</FontFamily>
+  <FontFamily x:Key="Fonts.Default">avares://SourceGit/Resources/Fonts/MiSans-Regular.ttf#MiSans</FontFamily>
+  <FontFamily x:Key="Fonts.Monospace">avares://SourceGit/Resources/Fonts/JetBrainsMono-Regular.ttf#JetBrains Mono</FontFamily>
 </ResourceDictionary>

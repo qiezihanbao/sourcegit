@@ -44,10 +44,7 @@ namespace SourceGit.Views
 
         public override void Render(DrawingContext context)
         {
-            if (_status == Status.Normal)
-                return;
-
-            context.DrawEllipse(_status == Status.Ahead ? AheadBrush : BehindBrush, null, new Rect(0, 0, 5, 5));
+            // 不绘制任何内容
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -68,7 +65,7 @@ namespace SourceGit.Views
                 _status = Status.Normal;
             }
 
-            return _status == Status.Normal ? new Size(0, 0) : new Size(9, 5);
+            return new Size(0, 0);
         }
 
         protected override void OnDataContextChanged(EventArgs e)

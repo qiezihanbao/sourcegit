@@ -9,6 +9,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SourceGit.Views.ChangeCollectionView"
              x:Name="ThisControl">
+  <UserControl.Resources>
+    <c:ChangeToGradientBrushConverter x:Key="ChangeToGradientBrushConverter"/>
+  </UserControl.Resources>
   <UserControl.Styles>
     <Style Selector="ListBox">
       <Setter Property="Background" Value="Transparent"/>
@@ -28,22 +31,34 @@
       <Setter Property="Template">
         <ControlTemplate>
           <Grid>
+            <!-- 渐变背景层 - 最底层 -->
+            <Border Name="PART_Gradient"
+                    Background="Transparent"
+                    CornerRadius="2"
+                    Margin="0,2,0,2"
+                    ZIndex="0"
+                    IsHitTestVisible="False"/>
+            <!-- 选中背景 - 中间层 -->
             <Border Name="PART_Background"
                     Background="Transparent"
                     CornerRadius="2"
-                    Opacity="0"/>
+                    Opacity="0"
+                    ZIndex="1"/>
+            <!-- 内容层 - 上层 -->
+            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Content="{TemplateBinding Content}"
+                              Padding="{TemplateBinding Padding}"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Stretch"
+                              ZIndex="2"/>
+            <!-- 左侧蓝色指示条 - 最上层 -->
             <Border Name="PART_Indicator"
                     Width="3"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Stretch"
                     Background="{DynamicResource Brush.Accent}"
                     IsVisible="False"
-                    ZIndex="1"/>
-            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
-                              Content="{TemplateBinding Content}"
-                              Padding="{TemplateBinding Padding}"
-                              VerticalContentAlignment="Center"
-                              HorizontalContentAlignment="Stretch" />
+                    ZIndex="3"/>
           </Grid>
         </ControlTemplate>
       </Setter>
@@ -79,38 +94,45 @@
                                    SelectionChanged="OnRowSelectionChanged">
         <ListBox.ItemTemplate>
           <DataTemplate DataType="vm:ChangeTreeNode">
-            <Grid ColumnDefinitions="16,16,Auto,*"
-                  Margin="{Binding Depth, Converter={x:Static c:IntConverters.ToTreeMargin}}"
-                  Background="Transparent"
-                  DoubleTapped="OnRowDoubleTapped"
-                  DataContextChanged="OnRowDataContextChanged">
-              <v:ChangeTreeNodeToggleButton Grid.Column="0"
-                                            Classes="tree_expander"
-                                            Focusable="False"
-                                            HorizontalAlignment="Center"
-                                            IsChecked="{Binding IsExpanded, Mode=OneWay}"
-                                            IsVisible="{Binding IsFolder}"/>
+            <Grid DoubleTapped="OnRowDoubleTapped" DataContextChanged="OnRowDataContextChanged">
+              <!-- 渐变背景层 - 使用负Margin扩展到整行，85%高度 -->
+              <Border Background="{Binding Change, Converter={StaticResource ChangeToGradientBrushConverter}}"
+                      CornerRadius="2"
+                      Margin="-12,2,0,2"
+                      Height="24"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"/>
+              <!-- 内容 -->
+              <Grid ColumnDefinitions="16,16,Auto,*"
+                    Margin="{Binding Depth, Converter={x:Static c:IntConverters.ToTreeMargin}}">
+                <v:ChangeTreeNodeToggleButton Grid.Column="0"
+                                              Classes="tree_expander"
+                                              Focusable="False"
+                                              HorizontalAlignment="Center"
+                                              IsChecked="{Binding IsExpanded, Mode=OneWay}"
+                                              IsVisible="{Binding IsFolder}"/>
 
-              <ToggleButton Grid.Column="1"
-                            Classes="folder"
-                            Focusable="False"
-                            Width="10" Height="10"
-                            Foreground="Goldenrod"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding IsExpanded}"
-                            IsVisible="{Binding IsFolder}"/>
+                <ToggleButton Grid.Column="1"
+                              Classes="folder"
+                              Focusable="False"
+                              Width="10" Height="10"
+                              Foreground="Goldenrod"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding IsExpanded}"
+                              IsVisible="{Binding IsFolder}"/>
 
-              <v:ChangeStatusIcon Grid.Column="1"
-                                  Width="10" Height="10"
-                                  VerticalAlignment="Center"
-                                  IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
-                                  Change="{Binding Change}"
-                                  IsVisible="{Binding !IsFolder}"/>
+                <v:ChangeStatusIcon Grid.Column="1"
+                                    Width="10" Height="10"
+                                    VerticalAlignment="Center"
+                                    IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
+                                    Change="{Binding Change}"
+                                    IsVisible="{Binding !IsFolder}"/>
 
-              <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="6,0,0,0" VerticalAlignment="Center">
-                <TextBlock Text="{Binding ConflictMarker, Mode=OneWay}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding ShowConflictMarker}"/>
-                <TextBlock Text="{Binding DisplayName, Mode=OneWay}" VerticalAlignment="Center"/>
-              </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="6,0,0,0" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding ConflictMarker, Mode=OneWay}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding ShowConflictMarker}"/>
+                  <TextBlock Text="{Binding DisplayName, Mode=OneWay}" VerticalAlignment="Center"/>
+                </StackPanel>
+              </Grid>
             </Grid>
           </DataTemplate>
         </ListBox.ItemTemplate>
@@ -125,25 +147,32 @@
                                    SelectionChanged="OnRowSelectionChanged">
         <ListBox.ItemTemplate>
           <DataTemplate DataType="m:Change">
-            <Grid ColumnDefinitions="Auto,Auto,Auto,*"
-                  Background="Transparent"
-                  DoubleTapped="OnRowDoubleTapped"
-                  DataContextChanged="OnRowDataContextChanged">
-              <v:ChangeStatusIcon Grid.Column="0"
-                                  Width="10" Height="10"
-                                  VerticalAlignment="Center"
-                                  Margin="4,0,0,0"
-                                  IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
-                                  Change="{Binding}" />
+            <Grid DoubleTapped="OnRowDoubleTapped" DataContextChanged="OnRowDataContextChanged">
+              <!-- 渐变背景层 - 使用负Margin扩展到整行，85%高度 -->
+              <Border Background="{Binding Converter={StaticResource ChangeToGradientBrushConverter}}"
+                      CornerRadius="2"
+                      Margin="-12,2,0,2"
+                      Height="24"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"/>
+              <!-- 内容 -->
+              <Grid ColumnDefinitions="Auto,Auto,Auto,*">
+                <v:ChangeStatusIcon Grid.Column="0"
+                                    Width="10" Height="10"
+                                    VerticalAlignment="Center"
+                                    Margin="4,0,0,0"
+                                    IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
+                                    Change="{Binding}"/>
 
-              <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0" VerticalAlignment="Center">
-                <TextBlock Text="{Binding ConflictMarker}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding IsConflicted}"/>
-                <TextBlock Text="{Binding Path, Converter={x:Static c:PathConverters.PureFileName}}" VerticalAlignment="Center"/>
-              </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding ConflictMarker}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding IsConflicted}"/>
+                  <TextBlock Text="{Binding Path, Converter={x:Static c:PathConverters.PureFileName}}" VerticalAlignment="Center"/>
+                </StackPanel>
 
-              <TextBlock Grid.Column="2"
-                         Text="{Binding Path, Converter={x:Static c:PathConverters.PureDirectoryName}}"
-                         Foreground="{DynamicResource Brush.FG2}"/>
+                <TextBlock Grid.Column="2"
+                           Text="{Binding Path, Converter={x:Static c:PathConverters.PureDirectoryName}}"
+                           Foreground="{DynamicResource Brush.FG2}"/>
+              </Grid>
             </Grid>
           </DataTemplate>
         </ListBox.ItemTemplate>
@@ -158,21 +187,28 @@
                                    SelectionChanged="OnRowSelectionChanged">
         <ListBox.ItemTemplate>
           <DataTemplate DataType="m:Change">
-            <Grid ColumnDefinitions="Auto,Auto,*"
-                  Background="Transparent"
-                  DoubleTapped="OnRowDoubleTapped"
-                  DataContextChanged="OnRowDataContextChanged">
-              <v:ChangeStatusIcon Grid.Column="0"
-                                  Width="10" Height="10"
-                                  VerticalAlignment="Center"
-                                  Margin="4,0,0,0"
-                                  IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
-                                  Change="{Binding}" />
+            <Grid DoubleTapped="OnRowDoubleTapped" DataContextChanged="OnRowDataContextChanged">
+              <!-- 渐变背景层 - 使用负Margin扩展到整行，85%高度 -->
+              <Border Background="{Binding Converter={StaticResource ChangeToGradientBrushConverter}}"
+                      CornerRadius="2"
+                      Margin="-12,2,0,2"
+                      Height="24"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"/>
+              <!-- 内容 -->
+              <Grid ColumnDefinitions="Auto,Auto,*">
+                <v:ChangeStatusIcon Grid.Column="0"
+                                    Width="10" Height="10"
+                                    VerticalAlignment="Center"
+                                    Margin="4,0,0,0"
+                                    IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
+                                    Change="{Binding}"/>
 
-              <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0">
-                <TextBlock Text="{Binding ConflictMarker}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding IsConflicted}"/>
-                <TextBlock Text="{Binding Path}"/>
-              </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0">
+                  <TextBlock Text="{Binding ConflictMarker}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding IsConflicted}"/>
+                  <TextBlock Text="{Binding Path}"/>
+                </StackPanel>
+              </Grid>
             </Grid>
           </DataTemplate>
         </ListBox.ItemTemplate>

@@ -1,0 +1,119 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SourceGit.Views.AnimatedTitleBarBackground"
+             IsHitTestVisible="False">
+  <Grid>
+    <Grid.Styles>
+      <Style Selector="Ellipse.Animation">
+        <Setter Property="Opacity" Value="0.25" />
+        <Style.Animations>
+          <!-- 往返循环动画，21秒周期 -->
+          <Animation Duration="0:0:21" Easing="CubicEaseInOut" IterationCount="INFINITE">
+            <KeyFrame Cue="0%">
+              <Setter Property="TranslateTransform.X" Value="0" />
+              <Setter Property="TranslateTransform.Y" Value="0" />
+            </KeyFrame>
+            <KeyFrame Cue="25%">
+              <Setter Property="TranslateTransform.X" Value="150" />
+              <Setter Property="TranslateTransform.Y" Value="-30" />
+            </KeyFrame>
+            <KeyFrame Cue="50%">
+              <Setter Property="TranslateTransform.X" Value="300" />
+              <Setter Property="TranslateTransform.Y" Value="20" />
+            </KeyFrame>
+            <KeyFrame Cue="75%">
+              <Setter Property="TranslateTransform.X" Value="150" />
+              <Setter Property="TranslateTransform.Y" Value="-30" />
+            </KeyFrame>
+            <KeyFrame Cue="100%">
+              <Setter Property="TranslateTransform.X" Value="0" />
+              <Setter Property="TranslateTransform.Y" Value="0" />
+            </KeyFrame>
+          </Animation>
+        </Style.Animations>
+        <Setter Property="Effect">
+          <BlurEffect Radius="455" />
+        </Setter>
+      </Style>
+    </Grid.Styles>
+
+    <!-- 黄色巨大圆点1 - 500px -->
+    <Ellipse Width="500" Height="500" Classes="Animation" Fill="{DynamicResource Color.TitleBarSpotlight.Yellow}"
+             HorizontalAlignment="Left" VerticalAlignment="Top"
+             Margin="-250 -300 0 0" RenderTransformOrigin="50% 50%"/>
+
+    <!-- 蓝色巨大圆点 - 400px -->
+    <Ellipse Width="400" Height="400" Classes="Animation" Fill="{DynamicResource Color.TitleBarSpotlight.Blue}"
+             HorizontalAlignment="Left" VerticalAlignment="Bottom"
+             Margin="-150 -250 0 0" RenderTransformOrigin="50% 50%">
+      <Ellipse.Styles>
+        <Style Selector="Ellipse">
+          <Setter Property="Opacity" Value="0.15" />
+          <Setter Property="Effect">
+            <BlurEffect Radius="390" />
+          </Setter>
+          <Style.Animations>
+            <!-- 往返循环动画，16秒周期 -->
+            <Animation Duration="0:0:16" Easing="CubicEaseInOut" IterationCount="INFINITE">
+              <KeyFrame Cue="0%">
+                <Setter Property="TranslateTransform.X" Value="0" />
+                <Setter Property="TranslateTransform.Y" Value="0" />
+              </KeyFrame>
+              <KeyFrame Cue="33%">
+                <Setter Property="TranslateTransform.X" Value="200" />
+                <Setter Property="TranslateTransform.Y" Value="40" />
+              </KeyFrame>
+              <KeyFrame Cue="66%">
+                <Setter Property="TranslateTransform.X" Value="400" />
+                <Setter Property="TranslateTransform.Y" Value="-30" />
+              </KeyFrame>
+              <KeyFrame Cue="100%">
+                <Setter Property="TranslateTransform.X" Value="0" />
+                <Setter Property="TranslateTransform.Y" Value="0" />
+              </KeyFrame>
+            </Animation>
+          </Style.Animations>
+        </Style>
+      </Ellipse.Styles>
+    </Ellipse>
+
+    <!-- 黄色巨大圆点2 - 600px -->
+    <Ellipse Width="600" Height="600" Classes="Animation" Fill="{DynamicResource Color.TitleBarSpotlight.Yellow}"
+             HorizontalAlignment="Right" VerticalAlignment="Top"
+             Margin="0 -350 -200 0" RenderTransformOrigin="50% 50%">
+      <Ellipse.Styles>
+        <Style Selector="Ellipse">
+          <Setter Property="Opacity" Value="0.35" />
+          <Setter Property="Effect">
+            <BlurEffect Radius="585" />
+          </Setter>
+          <Style.Animations>
+            <!-- 往返循环动画，19秒周期 -->
+            <Animation Duration="0:0:19" Easing="CubicEaseInOut" IterationCount="INFINITE">
+              <KeyFrame Cue="0%">
+                <Setter Property="TranslateTransform.X" Value="0" />
+                <Setter Property="TranslateTransform.Y" Value="0" />
+              </KeyFrame>
+              <KeyFrame Cue="25%">
+                <Setter Property="TranslateTransform.X" Value="-200" />
+                <Setter Property="TranslateTransform.Y" Value="-50" />
+              </KeyFrame>
+              <KeyFrame Cue="50%">
+                <Setter Property="TranslateTransform.X" Value="-400" />
+                <Setter Property="TranslateTransform.Y" Value="30" />
+              </KeyFrame>
+              <KeyFrame Cue="75%">
+                <Setter Property="TranslateTransform.X" Value="-200" />
+                <Setter Property="TranslateTransform.Y" Value="-50" />
+              </KeyFrame>
+              <KeyFrame Cue="100%">
+                <Setter Property="TranslateTransform.X" Value="0" />
+                <Setter Property="TranslateTransform.Y" Value="0" />
+              </KeyFrame>
+            </Animation>
+          </Style.Animations>
+        </Style>
+      </Ellipse.Styles>
+    </Ellipse>
+  </Grid>
+</UserControl>

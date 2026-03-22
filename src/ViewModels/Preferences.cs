@@ -295,6 +295,12 @@ namespace SourceGit.ViewModels
             set => SetProperty(ref _enableCompactFoldersInChangesTree, value);
         }
 
+        public bool EnableRowGradientEffects
+        {
+            get => _enableRowGradientEffects;
+            set => SetProperty(ref _enableRowGradientEffects, value);
+        }
+
         public Models.ChangeViewMode UnstagedChangeViewMode
         {
             get => _unstagedChangeViewMode;
@@ -804,6 +810,7 @@ namespace SourceGit.ViewModels
         private int _lfsImageActiveIdx = 0;
         private int _imageDiffActiveIdx = 0;
         private bool _enableCompactFoldersInChangesTree = false;
+        private bool _enableRowGradientEffects = true;
 
         private Models.ChangeViewMode _unstagedChangeViewMode = Models.ChangeViewMode.List;
         private Models.ChangeViewMode _stagedChangeViewMode = Models.ChangeViewMode.List;

@@ -157,6 +157,7 @@ namespace SourceGit.Views
 
                 context.DrawRectangle(null, new Pen(item.Brush), entireRect);
 
+                // 绘制图标
                 using (context.PushTransform(Matrix.CreateTranslation(x + 3, y + 3)))
                     context.DrawGeometry(fg, null, item.Icon);
 

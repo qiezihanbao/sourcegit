@@ -132,6 +132,16 @@ namespace SourceGit.Views
             set => SetValue(IsScrollToTopVisibleProperty, value);
         }
 
+        // Graph宽度属性，用于绑定
+        public static readonly StyledProperty<double> GraphWidthProperty =
+            AvaloniaProperty.Register<Histories, double>(nameof(GraphWidth), 233.0);
+
+        public double GraphWidth
+        {
+            get => GetValue(GraphWidthProperty);
+            set => SetValue(GraphWidthProperty, value);
+        }
+
         public Histories()
         {
             InitializeComponent();
@@ -289,6 +299,9 @@ namespace SourceGit.Views
                 _lastGraphRowHeight = rowHeight;
 
                 CommitGraph.Layout = new(startY, clipWidth, rowHeight);
+
+                // 更新Graph宽度属性（Graph宽度 + 5px padding）
+                SetCurrentValue(GraphWidthProperty, clipWidth + 5);
             }
         }
 
@@ -740,7 +753,6 @@ namespace SourceGit.Views
                 {
                     var reset = new MenuItem();
                     reset.Header = App.Text("CommitCM.Reset", current.Name, target);
-                    reset.Icon = App.CreateMenuIcon("Icons.Reset");
                     reset.Click += (_, e) =>
                     {
                         if (repo.CanCreatePopup())
