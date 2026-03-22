@@ -118,8 +118,11 @@
                     BorderBrush="{DynamicResource Brush.Border0}"
                     Focusable="False"/>
 
-      <ContentControl Grid.Column="2" Content="{Binding ViewContent}">
-        <ContentControl.DataTemplates>
+      <TransitioningContentControl Grid.Column="2" Content="{Binding ViewContent}">
+        <TransitioningContentControl.PageTransition>
+          <CrossFade Duration="0:0:0.15" />
+        </TransitioningContentControl.PageTransition>
+        <TransitioningContentControl.DataTemplates>
           <DataTemplate DataType="vm:FileHistoriesSingleRevision">
             <Grid RowDefinitions="Auto,*,Auto">
               <StackPanel Grid.Row="0" Margin="0,8" Height="28" HorizontalAlignment="Center" Orientation="Horizontal">
@@ -136,8 +139,11 @@
                 </RadioButton>
               </StackPanel>
 
-              <ContentControl Grid.Row="1" Margin="4,4,8,8" Content="{Binding ViewContent}">
-                <ContentControl.DataTemplates>
+              <TransitioningContentControl Grid.Row="1" Margin="4,4,8,8" Content="{Binding ViewContent}">
+                <TransitioningContentControl.PageTransition>
+                  <CrossFade Duration="0:0:0.15" />
+                </TransitioningContentControl.PageTransition>
+                <TransitioningContentControl.DataTemplates>
                   <DataTemplate DataType="vm:DiffContext">
                     <v:DiffView/>
                   </DataTemplate>
@@ -185,8 +191,8 @@
                       </Grid>
                     </Border>
                   </DataTemplate>
-                </ContentControl.DataTemplates>
-              </ContentControl>
+                </TransitioningContentControl.DataTemplates>
+              </TransitioningContentControl>
 
               <Button Grid.Row="2"
                       Classes="flat primary"
@@ -235,13 +241,16 @@
                 </Button>
               </Grid>
 
-              <ContentControl Grid.Row="1" Margin="4,4,8,8" Content="{Binding ViewContent}">
-                <ContentControl.DataTemplates>
+              <TransitioningContentControl Grid.Row="1" Margin="4,4,8,8" Content="{Binding ViewContent}">
+                <TransitioningContentControl.PageTransition>
+                  <CrossFade Duration="0:0:0.15" />
+                </TransitioningContentControl.PageTransition>
+                <TransitioningContentControl.DataTemplates>
                   <DataTemplate DataType="vm:DiffContext">
                     <v:DiffView/>
                   </DataTemplate>
-                </ContentControl.DataTemplates>
-              </ContentControl>
+                </TransitioningContentControl.DataTemplates>
+              </TransitioningContentControl>
             </Grid>
           </DataTemplate>
 
@@ -259,8 +268,8 @@
                          Text="{Binding Converter={x:Static c:StringConverters.FormatByResourceKey}, ConverterParameter='Histories.Selected'}"/>
             </StackPanel>
           </DataTemplate>
-        </ContentControl.DataTemplates>
-      </ContentControl>
+        </TransitioningContentControl.DataTemplates>
+      </TransitioningContentControl>
 
       <v:LoadingIcon Grid.Column="2"
                      Width="48" Height="48"

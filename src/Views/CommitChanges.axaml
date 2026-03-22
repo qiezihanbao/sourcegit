@@ -83,13 +83,16 @@
         </StackPanel>
       </Border>
 
-      <ContentControl Content="{Binding DiffContext}">
-        <ContentControl.DataTemplates>
+      <TransitioningContentControl Content="{Binding DiffContext}">
+        <TransitioningContentControl.PageTransition>
+          <CrossFade Duration="0:0:0.15" />
+        </TransitioningContentControl.PageTransition>
+        <TransitioningContentControl.DataTemplates>
           <DataTemplate DataType="vm:DiffContext">
             <v:DiffView/>
           </DataTemplate>
-        </ContentControl.DataTemplates>
-      </ContentControl>
+        </TransitioningContentControl.DataTemplates>
+      </TransitioningContentControl>
     </Grid>
   </Grid>
 </UserControl>

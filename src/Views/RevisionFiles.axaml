@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -65,7 +65,7 @@
                   <Style Selector="ListBoxItem">
                     <Setter Property="Padding" Value="0"/>
                     <Setter Property="MinHeight" Value="26"/>
-                    <Setter Property="CornerRadius" Value="4"/>
+                    <Setter Property="CornerRadius" Value="2"/>
                   </Style>
 
                   <Style Selector="ListBox">
@@ -149,12 +149,12 @@
                       Background="Transparent"
                       Click="OnOpenFileWithDefaultEditor"
                       IsVisible="{Binding CanOpenRevisionFileWithDefaultEditor, Mode=OneWay}"
-                      HotKey="{OnPlatform Ctrl+O, macOS=⌘+O}">
+                      HotKey="{OnPlatform Ctrl+O, macOS=鈱?O}">
                 <ToolTip.Tip>
                   <TextBlock>
                     <Run Text="{DynamicResource Text.Open}"/>
                     <Run Text=" "/>
-                    <Run Text="{OnPlatform Ctrl+O, macOS=⌘+O}" FontSize="11" Foreground="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"/>
+                    <Run Text="{OnPlatform Ctrl+O, macOS=鈱?O}" FontSize="11" Foreground="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"/>
                   </TextBlock>
                 </ToolTip.Tip>
                 <Path Width="12" Height="12" Data="{StaticResource Icons.OpenWith}"/>

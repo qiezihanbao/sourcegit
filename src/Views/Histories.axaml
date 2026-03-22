@@ -47,10 +47,10 @@
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
                 HeadersVisibility="Column"
-                ColumnHeaderHeight="24"
+                ColumnHeaderHeight="32"
                 ClipboardCopyMode="None"
                 Focusable="False"
-                RowHeight="26"
+                RowHeight="36"
                 HorizontalScrollBarVisibility="Disabled"
                 VerticalScrollBarVisibility="Auto"
                 Loaded="OnCommitListLoaded"
@@ -105,6 +105,7 @@
           </Style>
 
           <Style Selector="DataGridCell">
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="Template">
               <ControlTemplate>
                 <Grid x:Name="PART_CellRoot">
@@ -157,7 +158,7 @@
                     </v:CommitRefsPresenter>
 
                     <v:CommitSubjectPresenter Grid.Column="3"
-                                              Height="26"
+                                              Height="36"
                                               FontFamily="{DynamicResource Fonts.Default}"
                                               CodeFontFamily="{DynamicResource Fonts.Monospace}"
                                               InlineCodeBackground="{DynamicResource Brush.InlineCode}"

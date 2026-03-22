@@ -36,7 +36,7 @@
                     DoubleTapped="OnItemDoubleTapped"
                     ToolTip.Tip="{Binding ToolTip}"
                     ToolTip.Placement="Right">
-              <Grid ColumnDefinitions="16,16,*,Auto" Margin="{Binding Depth, Converter={x:Static c:IntConverters.ToTreeMargin}}">
+              <Grid ColumnDefinitions="16,16,*,Auto,Auto" Margin="{Binding Depth, Converter={x:Static c:IntConverters.ToTreeMargin}}">
                 <v:TagTreeNodeToggleButton Grid.Column="0"
                                            Classes="tree_expander"
                                            Focusable="False"
@@ -46,12 +46,21 @@
 
                 <v:TagTreeNodeIcon Grid.Column="1" IsExpanded="{Binding IsExpanded, Mode=OneWay}"/>
 
-                <TextBlock Grid.Column="2" Margin="4,0,0,0">
+                <TextBlock Grid.Column="2" Margin="4,0,0,0" FontSize="14" TextTrimming="CharacterEllipsis">
                   <Run Text="{Binding FullPath, Converter={x:Static c:PathConverters.PureFileName}, Mode=OneWay}"/>
-                  <Run Text="{Binding TagsCount}" Foreground="{DynamicResource Brush.FG2}"/>
                 </TextBlock>
 
-                <Border Grid.Column="3" Margin="4,0,8,0" IsVisible="{Binding !IsFolder}">
+                <Border Grid.Column="3" 
+                        Margin="8,0"
+                        Background="{DynamicResource Brush.Accent}" 
+                        CornerRadius="4" 
+                        Padding="4,0" 
+                        VerticalAlignment="Center" 
+                        IsVisible="{Binding TagsCount, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                  <TextBlock Text="{Binding TagsCount}" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                </Border>
+
+                <Border Grid.Column="4" Margin="4,0,8,0" IsVisible="{Binding !IsFolder}">
                   <v:FilterModeSwitchButton Mode="{Binding FilterMode}"/>
                 </Border>
               </Grid>

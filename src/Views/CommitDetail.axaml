@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -40,7 +40,7 @@
               <Style Selector="ListBoxItem">
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="MinHeight" Value="24"/>
-                <Setter Property="CornerRadius" Value="4"/>
+                <Setter Property="CornerRadius" Value="2"/>
               </Style>
             </ListBox.Styles>
 
@@ -56,7 +56,7 @@
                   <ToolTip.Tip>
                     <TextBlock TextWrapping="Wrap">
                       <Run Text="{Binding Path, Mode=OneWay}"/>
-                      <Run Text=" • " Foreground="Gray"/>
+                      <Run Text=" 鈥?" Foreground="Gray"/>
                       <Run Text="{Binding IndexDesc, Mode=OneWay}" Foreground="Gray"/>
                     </TextBlock>
                   </ToolTip.Tip>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -271,7 +271,7 @@ namespace SourceGit.Views
             menu.Open(this);
         }
 
-        private string GetFallbackString(string name)
+        public static string GetFallbackString(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 return "?";
@@ -287,7 +287,7 @@ namespace SourceGit.Views
             return name.Substring(0, 1);
         }
 
-        private static readonly GradientStops[] FALLBACK_GRADIENTS = [
+        public static readonly GradientStops[] FALLBACK_GRADIENTS = [
             new GradientStops() { new GradientStop(Colors.Orange, 0), new GradientStop(Color.FromRgb(255, 213, 134), 1) },
             new GradientStops() { new GradientStop(Colors.DodgerBlue, 0), new GradientStop(Colors.LightSkyBlue, 1) },
             new GradientStops() { new GradientStop(Colors.LimeGreen, 0), new GradientStop(Color.FromRgb(124, 241, 124), 1) },

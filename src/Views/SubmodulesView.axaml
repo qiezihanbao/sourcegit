@@ -13,7 +13,7 @@
       <ListBox Classes="repo_left_content_list" Padding="0,0,2,0" ItemsSource="{Binding Rows}" SelectionMode="Single" KeyDown="OnKeyDown">
         <ListBox.Styles>
           <Style Selector="ListBoxItem">
-            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="CornerRadius" Value="2"/>
           </Style>
         </ListBox.Styles>
 
@@ -120,12 +120,22 @@
 
                 <TextBlock Grid.Column="2"
                            Margin="8,0,0,0"
+                           FontSize="14"
                            TextTrimming="CharacterEllipsis">
                   <Run Text="{Binding FullPath, Converter={x:Static c:PathConverters.PureFileName}, Mode=OneWay}"/>
-                  <Run Text="{Binding ChildCounter}" Foreground="{DynamicResource Brush.FG2}"/>
                 </TextBlock>
 
-                <Path Grid.Column="3"
+                <Border Grid.Column="3" 
+                        Margin="8,0"
+                        Background="{DynamicResource Brush.Accent}" 
+                        CornerRadius="4" 
+                        Padding="4,0" 
+                        VerticalAlignment="Center" 
+                        IsVisible="{Binding ChildCounter, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                  <TextBlock Text="{Binding ChildCounter}" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                </Border>
+
+                <Path Grid.Column="4"
                       Width="8" Height="8"
                       Margin="0,0,8,0"
                       Fill="Goldenrod"
@@ -142,7 +152,7 @@
       <ListBox Classes="repo_left_content_list" ItemsSource="{Binding Submodules}" SelectionMode="Single" KeyDown="OnKeyDown">
         <ListBox.Styles>
           <Style Selector="ListBoxItem">
-            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="CornerRadius" Value="2"/>
           </Style>
         </ListBox.Styles>
 

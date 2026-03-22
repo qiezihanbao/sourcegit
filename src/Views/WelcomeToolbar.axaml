@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SourceGit.Views.WelcomeToolbar"
              x:DataType="vm:Welcome">
-  <Grid ColumnDefinitions="Auto,*,Auto" Margin="4,0">
+  <Grid Height="36" ColumnDefinitions="Auto,*,Auto" Margin="4,0">
     <StackPanel Grid.Column="0" Orientation="Horizontal">
       <Button Classes="icon_button" Width="32" Command="{Binding Clone}">
         <ToolTip.Tip>

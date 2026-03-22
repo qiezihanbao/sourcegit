@@ -10,6 +10,12 @@
              x:Class="SourceGit.Views.LauncherTabBar"
              x:DataType="vm:Launcher"
              x:Name="ThisControl">
+  <UserControl.Styles>
+    <Style Selector="ListBoxItem:selected TextBlock.tab_name">
+      <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+  </UserControl.Styles>
+
   <Grid ColumnDefinitions="Auto,*,Auto">
     <RepeatButton Grid.Column="0"
                   Classes="icon_button"
@@ -90,6 +96,7 @@
                              Fill="{Binding DirtyState, Converter={x:Static c:DirtyStateConverters.ToBrush}}"/>
 
                     <TextBlock Grid.Column="1"
+                               Classes="tab_name"
                                VerticalAlignment="Center"
                                FontSize="{Binding Source={x:Static vm:Preferences.Instance}, Path=DefaultFontSize, Converter={x:Static c:DoubleConverters.Decrease}}"
                                TextAlignment="Center"
@@ -98,10 +105,10 @@
                   </Grid>
 
                   <TextBlock Grid.Column="1"
-                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                             Classes="tab_name"
+                             VerticalAlignment="Center" HorizontalAlignment="Center"
                              FontSize="{Binding Source={x:Static vm:Preferences.Instance}, Path=DefaultFontSize, Converter={x:Static c:DoubleConverters.Decrease}}"
-                             TextAlignment="Center"
-                             Text="{DynamicResource Text.PageTabBar.Welcome.Title}"
+                             Text="{DynamicResource Text.Welcome}"
                              IsVisible="{Binding !Node.IsRepository}"
                              IsHitTestVisible="False"/>
 

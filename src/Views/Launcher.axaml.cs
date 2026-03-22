@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using Avalonia;
 using Avalonia.Controls;
@@ -47,16 +47,16 @@ namespace SourceGit.Views
             if (OperatingSystem.IsMacOS())
             {
                 HasLeftCaptionButton = true;
-                CaptionHeight = new GridLength(34);
+                CaptionHeight = new GridLength(40);
                 ExtendClientAreaChromeHints |= ExtendClientAreaChromeHints.OSXThickTitleBar;
             }
             else if (UseSystemWindowFrame)
             {
-                CaptionHeight = new GridLength(30);
+                CaptionHeight = new GridLength(36);
             }
             else
             {
-                CaptionHeight = new GridLength(38);
+                CaptionHeight = new GridLength(42);
             }
 
             InitializeComponent();
@@ -127,7 +127,7 @@ namespace SourceGit.Views
                 if (OperatingSystem.IsMacOS())
                     HasLeftCaptionButton = state != WindowState.FullScreen;
                 else if (!UseSystemWindowFrame)
-                    CaptionHeight = new GridLength(state == WindowState.Maximized ? 30 : 38);
+                    CaptionHeight = new GridLength(state == WindowState.Maximized ? 36 : 42);
 
                 ViewModels.Preferences.Instance.Layout.LauncherWindowState = state;
             }

@@ -66,7 +66,7 @@ namespace SourceGit.ViewModels
 
         public string TagsCount
         {
-            get => Counter > 0 ? $"({Counter})" : string.Empty;
+            get => Counter > 0 ? Counter.ToString() : string.Empty;
         }
 
         public TagTreeNode(Models.Tag t, int depth)
@@ -165,7 +165,7 @@ namespace SourceGit.ViewModels
         }
 
         private Models.FilterMode _filterMode = Models.FilterMode.None;
-        private CornerRadius _cornerRadius = new CornerRadius(4);
+        private CornerRadius _cornerRadius = new CornerRadius(2);
         private bool _isExpanded = true;
     }
 
@@ -202,7 +202,7 @@ namespace SourceGit.ViewModels
         }
 
         private Models.FilterMode _filterMode = Models.FilterMode.None;
-        private CornerRadius _cornerRadius = new CornerRadius(4);
+        private CornerRadius _cornerRadius = new CornerRadius(2);
     }
 
     public class TagCollectionAsList
@@ -224,7 +224,7 @@ namespace SourceGit.ViewModels
             foreach (var item in TagItems)
             {
                 item.IsSelected = false;
-                item.CornerRadius = new CornerRadius(4);
+                item.CornerRadius = new CornerRadius(2);
             }
         }
 
@@ -246,16 +246,16 @@ namespace SourceGit.ViewModels
                     if (last is { IsSelected: true })
                     {
                         last.CornerRadius = new CornerRadius(last.CornerRadius.TopLeft, 0);
-                        item.CornerRadius = new CornerRadius(0, 4);
+                        item.CornerRadius = new CornerRadius(0, 2);
                     }
                     else
                     {
-                        item.CornerRadius = new CornerRadius(4);
+                        item.CornerRadius = new CornerRadius(2);
                     }
                 }
                 else
                 {
-                    item.CornerRadius = new CornerRadius(4);
+                    item.CornerRadius = new CornerRadius(2);
                 }
 
                 last = item;
@@ -354,16 +354,16 @@ namespace SourceGit.ViewModels
                     if (last is { IsSelected: true })
                     {
                         last.CornerRadius = new CornerRadius(last.CornerRadius.TopLeft, 0);
-                        row.CornerRadius = new CornerRadius(0, 4);
+                        row.CornerRadius = new CornerRadius(0, 2);
                     }
                     else
                     {
-                        row.CornerRadius = new CornerRadius(4);
+                        row.CornerRadius = new CornerRadius(2);
                     }
                 }
                 else
                 {
-                    row.CornerRadius = new CornerRadius(4);
+                    row.CornerRadius = new CornerRadius(2);
                 }
 
                 last = row;
@@ -388,7 +388,7 @@ namespace SourceGit.ViewModels
             if (node.IsSelected)
             {
                 node.IsSelected = false;
-                node.CornerRadius = new CornerRadius(4);
+                node.CornerRadius = new CornerRadius(2);
             }
 
             foreach (var child in node.Children)

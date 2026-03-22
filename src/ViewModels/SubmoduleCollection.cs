@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using Avalonia.Collections;
 
@@ -27,7 +27,7 @@ namespace SourceGit.ViewModels
 
         public string ChildCounter
         {
-            get => Counter > 0 ? $"({Counter})" : string.Empty;
+            get => Counter > 0 ? Counter.ToString() : string.Empty;
         }
 
         public bool IsDirty

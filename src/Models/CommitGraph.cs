@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Avalonia;
@@ -12,7 +12,7 @@ namespace SourceGit.Models
     {
         public static List<Pen> Pens { get; } = [];
 
-        public static void SetDefaultPens(double thickness = 2)
+        public static void SetDefaultPens(double thickness = 3)
         {
             SetPens(s_defaultPenColors, thickness);
         }
@@ -56,6 +56,7 @@ namespace SourceGit.Models
             public Point Center;
             public int Color;
             public bool IsMerged;
+            public Commit Commit;
         }
 
         public List<Path> Paths { get; } = [];
@@ -151,7 +152,7 @@ namespace SourceGit.Models
                 // Calculate link position of this commit.
                 var position = new Point(major?.LastX ?? offsetX, offsetY);
                 var dotColor = major?.Path.Color ?? 0;
-                var anchor = new Dot() { Center = position, Color = dotColor, IsMerged = isMerged };
+                var anchor = new Dot() { Center = position, Color = dotColor, IsMerged = isMerged, Commit = commit };
                 if (commit.IsCurrentHead)
                     anchor.Type = DotType.Head;
                 else if (commit.Parents.Count > 1)

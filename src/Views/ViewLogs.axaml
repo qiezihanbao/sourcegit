@@ -1,4 +1,4 @@
-<v:ChromelessWindow xmlns="https://github.com/avaloniaui"
+﻿<v:ChromelessWindow xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -62,7 +62,7 @@
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Height" Value="28"/>
-            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="CornerRadius" Value="2"/>
           </Style>
         </ListBox.Styles>
 

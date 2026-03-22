@@ -46,6 +46,9 @@
   <x:String x:Key="Text.Avatar.Refetch" xml:space="preserve">Refresh</x:String>
   <x:String x:Key="Text.BinaryNotSupported" xml:space="preserve">BINARY FILE NOT SUPPORTED!!!</x:String>
   <x:String x:Key="Text.Bisect">Bisect</x:String>
+  <x:String x:Key="Text.Branch">Branch</x:String>
+  <x:String x:Key="Text.Action">Action</x:String>
+  <x:String x:Key="Text.Clean">Clean</x:String>
   <x:String x:Key="Text.Bisect.Abort">Abort</x:String>
   <x:String x:Key="Text.Bisect.Bad">Bad</x:String>
   <x:String x:Key="Text.Bisect.Detecting">Bisecting. Is current HEAD good or bad?</x:String>

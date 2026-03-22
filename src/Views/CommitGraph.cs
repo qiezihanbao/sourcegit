@@ -1,10 +1,10 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
 namespace SourceGit.Views
 {
-    public class CommitGraph : Control
+    public class CommitGraph : Control, Models.IAvatarHost
     {
         public static readonly StyledProperty<Models.CommitGraph> GraphProperty =
             AvaloniaProperty.Register<CommitGraph, Models.CommitGraph>(nameof(Graph));
@@ -49,6 +49,23 @@ namespace SourceGit.Views
                 DotBrushProperty,
                 OnlyHighlightCurrentBranchProperty,
                 LayoutProperty);
+        }
+
+        protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            base.OnAttachedToVisualTree(e);
+            Models.AvatarManager.Instance.Subscribe(this);
+        }
+
+        protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            base.OnDetachedFromVisualTree(e);
+            Models.AvatarManager.Instance.Unsubscribe(this);
+        }
+
+        public void OnAvatarResourceChanged(string email, Avalonia.Media.Imaging.Bitmap image)
+        {
+            Avalonia.Threading.Dispatcher.UIThread.Post(InvalidateVisual);
         }
 
         public override void Render(DrawingContext context)
@@ -219,19 +236,64 @@ namespace SourceGit.Views
                 if (!dot.IsMerged && onlyHighlightCurrentBranch)
                     pen = grayedPen;
 
+                if (dot.Commit != null)
+                {
+                    var avatar = Models.AvatarManager.Instance.Request(dot.Commit.Author.Email, false);
+                    if (avatar != null)
+                    {
+                        var radius = 9.0;
+                        var rect = new Rect(center.X - radius, center.Y - radius, radius * 2, radius * 2);
+                        var geo = new RoundedRect(rect, radius, radius);
+                        using (context.PushClip(geo))
+                        {
+                            context.DrawImage(avatar, rect);
+                        }
+                    }
+                    else
+                    {
+                        var fallback = Avatar.GetFallbackString(dot.Commit.Author.Name);
+                        var typeface = new Typeface("fonts:SourceGit#JetBrains Mono");
+                        var label = new FormattedText(
+                            fallback,
+                            System.Globalization.CultureInfo.CurrentCulture,
+                            FlowDirection.LeftToRight,
+                            typeface,
+                            10,
+                            Brushes.White);
+
+                        var chars = fallback.ToCharArray();
+                        var sum = 0;
+                        foreach (var c in chars)
+                            sum += System.Math.Abs(c);
+
+                        var bg = new LinearGradientBrush()
+                        {
+                            GradientStops = Avatar.FALLBACK_GRADIENTS[sum % Avatar.FALLBACK_GRADIENTS.Length],
+                            StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
+                            EndPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
+                        };
+
+                        context.DrawEllipse(bg, null, center, 9, 9);
+                        context.DrawText(label, new Point(center.X - label.Width * 0.5, center.Y - label.Height * 0.5));
+                    }
+
+                    context.DrawEllipse(null, pen, center, 9, 9);
+                    continue;
+                }
+
                 switch (dot.Type)
                 {
                     case Models.CommitGraph.DotType.Head:
-                        context.DrawEllipse(dotFill, pen, center, 6, 6);
-                        context.DrawEllipse(pen.Brush, null, center, 3, 3);
+                        context.DrawEllipse(dotFill, pen, center, 8, 8);
+                        context.DrawEllipse(pen.Brush, null, center, 4, 4);
                         break;
                     case Models.CommitGraph.DotType.Merge:
-                        context.DrawEllipse(pen.Brush, null, center, 6, 6);
-                        context.DrawLine(dotFillPen, new Point(center.X, center.Y - 3), new Point(center.X, center.Y + 3));
-                        context.DrawLine(dotFillPen, new Point(center.X - 3, center.Y), new Point(center.X + 3, center.Y));
+                        context.DrawEllipse(pen.Brush, null, center, 8, 8);
+                        context.DrawLine(dotFillPen, new Point(center.X, center.Y - 4), new Point(center.X, center.Y + 4));
+                        context.DrawLine(dotFillPen, new Point(center.X - 4, center.Y), new Point(center.X + 4, center.Y));
                         break;
                     default:
-                        context.DrawEllipse(dotFill, pen, center, 3, 3);
+                        context.DrawEllipse(dotFill, pen, center, 4, 4);
                         break;
                 }
             }

@@ -22,9 +22,51 @@
     </Style>
 
     <Style Selector="ListBoxItem">
-      <Setter Property="Height" Value="24"/>
+      <Setter Property="Height" Value="28"/>
       <Setter Property="Margin" Value="0"/>
-      <Setter Property="Padding" Value="0"/>
+      <Setter Property="Padding" Value="12,0,0,0"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid>
+            <Border Name="PART_Background"
+                    Background="Transparent"
+                    CornerRadius="2"
+                    Opacity="0"/>
+            <Border Name="PART_Indicator"
+                    Width="3"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    Background="{DynamicResource Brush.Accent}"
+                    IsVisible="False"
+                    ZIndex="1"/>
+            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Content="{TemplateBinding Content}"
+                              Padding="{TemplateBinding Padding}"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Stretch" />
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="ListBoxItem:pointerover /template/ Border#PART_Background">
+      <Setter Property="Background" Value="{DynamicResource Brush.AccentHovered}" />
+      <Setter Property="Opacity" Value=".5"/>
+    </Style>
+    <Style Selector="ListBoxItem:selected /template/ Border#PART_Background">
+      <Setter Property="Background" Value="{DynamicResource Brush.AccentHovered}" />
+      <Setter Property="Opacity" Value="1"/>
+    </Style>
+    <Style Selector="ListBoxItem:selected /template/ Border#PART_Indicator">
+      <Setter Property="IsVisible" Value="True"/>
+    </Style>
+    <Style Selector="ListBox:focus-within ListBoxItem:selected /template/ Border#PART_Background">
+      <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
+      <Setter Property="Opacity" Value=".65"/>
+    </Style>
+    <Style Selector="ListBox:focus-within ListBoxItem:selected:pointerover /template/ Border#PART_Background">
+      <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
+      <Setter Property="Opacity" Value=".8"/>
     </Style>
   </UserControl.Styles>
 
@@ -52,21 +94,22 @@
               <ToggleButton Grid.Column="1"
                             Classes="folder"
                             Focusable="False"
-                            Width="14" Height="14"
-                            Margin="0,1,0,0"
+                            Width="10" Height="10"
                             Foreground="Goldenrod"
+                            VerticalAlignment="Center"
                             IsChecked="{Binding IsExpanded}"
                             IsVisible="{Binding IsFolder}"/>
 
               <v:ChangeStatusIcon Grid.Column="1"
-                                  Width="14" Height="14"
+                                  Width="10" Height="10"
+                                  VerticalAlignment="Center"
                                   IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
                                   Change="{Binding Change}"
                                   IsVisible="{Binding !IsFolder}"/>
 
-              <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="4,0,0,0">
+              <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="6,0,0,0" VerticalAlignment="Center">
                 <TextBlock Text="{Binding ConflictMarker, Mode=OneWay}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding ShowConflictMarker}"/>
-                <TextBlock Text="{Binding DisplayName, Mode=OneWay}"/>
+                <TextBlock Text="{Binding DisplayName, Mode=OneWay}" VerticalAlignment="Center"/>
               </StackPanel>
             </Grid>
           </DataTemplate>
@@ -87,14 +130,15 @@
                   DoubleTapped="OnRowDoubleTapped"
                   DataContextChanged="OnRowDataContextChanged">
               <v:ChangeStatusIcon Grid.Column="0"
-                                  Width="14" Height="14"
+                                  Width="10" Height="10"
+                                  VerticalAlignment="Center"
                                   Margin="4,0,0,0"
                                   IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
                                   Change="{Binding}" />
 
-              <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0">
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0" VerticalAlignment="Center">
                 <TextBlock Text="{Binding ConflictMarker}" Foreground="DarkOrange" FontWeight="Bold" Margin="0,0,4,0" IsVisible="{Binding IsConflicted}"/>
-                <TextBlock Text="{Binding Path, Converter={x:Static c:PathConverters.PureFileName}}"/>
+                <TextBlock Text="{Binding Path, Converter={x:Static c:PathConverters.PureFileName}}" VerticalAlignment="Center"/>
               </StackPanel>
 
               <TextBlock Grid.Column="2"
@@ -119,7 +163,8 @@
                   DoubleTapped="OnRowDoubleTapped"
                   DataContextChanged="OnRowDataContextChanged">
               <v:ChangeStatusIcon Grid.Column="0"
-                                  Width="14" Height="14"
+                                  Width="10" Height="10"
+                                  VerticalAlignment="Center"
                                   Margin="4,0,0,0"
                                   IsUnstagedChange="{Binding #ThisControl.IsUnstagedChange}"
                                   Change="{Binding}" />

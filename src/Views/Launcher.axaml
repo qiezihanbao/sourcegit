@@ -115,13 +115,16 @@
     </Grid>
 
     <!-- Page -->
-    <ContentControl Grid.Row="1" Content="{Binding ActivePage}" Background="{DynamicResource Brush.Window}">
-      <ContentControl.DataTemplates>
+    <TransitioningContentControl Grid.Row="1" Content="{Binding ActivePage}" Background="{DynamicResource Brush.Window}">
+      <TransitioningContentControl.PageTransition>
+        <CrossFade Duration="0:0:0.15" />
+      </TransitioningContentControl.PageTransition>
+      <TransitioningContentControl.DataTemplates>
         <DataTemplate DataType="vm:LauncherPage">
           <v:LauncherPage/>
         </DataTemplate>
-      </ContentControl.DataTemplates>
-    </ContentControl>
+      </TransitioningContentControl.DataTemplates>
+    </TransitioningContentControl>
 
     <!-- Command Palette -->
     <Border Grid.Row="0" Grid.RowSpan="2"

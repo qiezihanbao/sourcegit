@@ -128,7 +128,7 @@
             <!-- Content Area (allows double-clicking) -->
             <Grid Grid.Column="1"
                   Background="Transparent"
-                  ColumnDefinitions="18,*,Auto,Auto"
+                  ColumnDefinitions="18,*,Auto,Auto,Auto"
                   DoubleTapped="OnDoubleTappedBranchNode">
 
               <!-- Icon -->
@@ -136,14 +136,24 @@
 
               <!-- Name -->
               <TextBlock Grid.Column="1"
+                         FontSize="14"
                          FontWeight="{Binding IsCurrent, Converter={x:Static c:BoolConverters.IsBoldToFontWeight}}"
                          TextTrimming="CharacterEllipsis">
                 <Run Text="{Binding Name}"/>
-                <Run Text="{Binding BranchesCount}" Foreground="{DynamicResource Brush.FG2}"/>
               </TextBlock>
 
+              <Border Grid.Column="2" 
+                      Margin="8,0"
+                      Background="{DynamicResource Brush.Accent}" 
+                      CornerRadius="4" 
+                      Padding="4,0" 
+                      VerticalAlignment="Center" 
+                      IsVisible="{Binding BranchesCount, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                <TextBlock Text="{Binding BranchesCount}" Foreground="White" FontSize="10" FontWeight="Bold"/>
+              </Border>
+
               <!-- Upstream invalid tip -->
-              <Border Grid.Column="2"
+              <Border Grid.Column="3"
                       Width="12" Height="12"
                       Margin="8,0"
                       Background="Transparent"
@@ -152,7 +162,7 @@
               </Border>
 
               <!-- Tracking status -->
-              <v:BranchTreeNodeTrackStatusPresenter Grid.Column="2"
+              <v:BranchTreeNodeTrackStatusPresenter Grid.Column="3"
                                                     VerticalAlignment="Center"
                                                     FontFamily="{DynamicResource Fonts.Monospace}"
                                                     FontSize="10"
@@ -160,7 +170,7 @@
                                                     Background="{DynamicResource Brush.Badge}"/>
 
               <!-- Filter Mode Switcher -->
-              <v:FilterModeSwitchButton Grid.Column="3"
+              <v:FilterModeSwitchButton Grid.Column="4"
                                         Margin="0,0,8,0"
                                         Mode="{Binding FilterMode}"/>
             </Grid>

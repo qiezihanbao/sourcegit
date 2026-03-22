@@ -50,6 +50,9 @@
   <x:String x:Key="Text.Avatar.Refetch" xml:space="preserve">重新加载</x:String>
   <x:String x:Key="Text.BinaryNotSupported" xml:space="preserve">二进制文件不支持该操作!!!</x:String>
   <x:String x:Key="Text.Bisect">二分定位(bisect)</x:String>
+  <x:String x:Key="Text.Branch">分支</x:String>
+  <x:String x:Key="Text.Action">操作</x:String>
+  <x:String x:Key="Text.Clean">清理</x:String>
   <x:String x:Key="Text.Bisect.Abort">终止</x:String>
   <x:String x:Key="Text.Bisect.Bad">标记错误</x:String>
   <x:String x:Key="Text.Bisect.Detecting">二分定位进行中。当前提交是 '正确' 还是 '错误' ？</x:String>

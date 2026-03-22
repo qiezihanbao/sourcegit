@@ -483,11 +483,11 @@ namespace SourceGit.Views
                     {
                         var prevTop = prev.CornerRadius.TopLeft;
                         prev.CornerRadius = new CornerRadius(prevTop, 0);
-                        row.CornerRadius = new CornerRadius(0, 4);
+                        row.CornerRadius = new CornerRadius(0, 2);
                     }
                     else
                     {
-                        row.CornerRadius = new CornerRadius(4);
+                        row.CornerRadius = new CornerRadius(2);
                     }
                 }
 
