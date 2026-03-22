@@ -19,6 +19,7 @@ namespace SourceGit.Controls
         }
 
         public static void SetEnableAnimation(AvaloniaObject element, bool value)
+        {
             element.SetValue(EnableAnimationProperty, value);
         }
 
